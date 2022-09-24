@@ -13,12 +13,12 @@ export class PostService {
   constructor(private angularFirestore: AngularFirestore) {   }
 
   // Métodos para el CRUD
-  getPost(){
-    return this.angularFirestore.collection('posts').snapshotChanges();
+  getPosts(){
+    return this.angularFirestore.collection('Post').snapshotChanges();
   }
 
   getPostById(id){
-    return this.angularFirestore.collection('post').doc(id).valueChanges()
+    return this.angularFirestore.collection('Post').doc(id).valueChanges()
   }
 
   createPost(post: Post){
