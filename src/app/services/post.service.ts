@@ -1,46 +1,50 @@
-import { Injectable } from '@angular/core'; 
+import { Injectable } from '@angular/core';
 
 //importando los módulos ara DB con firebase
 
-import { AngularFirestore } from "@angular/fire/compat/firestore";
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Post } from '../post.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PostService {
-
-  constructor(private angularFirestore: AngularFirestore) {   }
+  constructor(private angularFirestore: AngularFirestore) {}
 
   // Métodos para el CRUD
-  getPosts(){
-    return this.angularFirestore.collection('Post').snapshotChanges();
+  getPosts() {
+    return this.angularFirestore.collection('posts').snapshotChanges();
   }
 
-  getPostById(id){
-    return this.angularFirestore.collection('Post').doc(id).valueChanges()
+  getPostById(id) {
+    return this.angularFirestore.collection('posts').doc(id).valueChanges();
   }
 
-  createPost(post: Post){
-    return new Promise<any>((resolve, reject)=>{
-      this.angularFirestore.collection('post').add(post).then((resp)=>{
-        console.log(resp)
-      },(error)=>{
-        reject(error)
-      })
-    })
-  }
-
-
-  updatePost(post: Post, id){
-    return this.angularFirestore.collection('post').doc(id).update({
-      title: post.title,
-      content: post.content,
-      author: post.author
+  createPost(post: Post) {
+    return new Promise<any>((resolve, reject) => {
+      this.angularFirestore
+        .collection('posts')
+        .add(post)
+        .then(
+          (response) => {
+            // console.log(response);
+          },
+          (error) => {
+            reject(error);
+          }
+        );
     });
   }
 
-  deletePost(post){
-    return this.angularFirestore.collection('post').doc(post.id).delete()
+  updatePost(post: Post, id) {
+    return this.angularFirestore.collection('posts').doc(id).update({
+      title: post.title,
+      content: post.content,
+      author: post.author,
+    });
+  }
+
+  deletePost(post) {
+    return this.angularFirestore.collection('posts').doc(post.id).delete();
   }
 }
